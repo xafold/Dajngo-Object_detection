@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'object_detection/yolo_detection.css' %}">
+    <title>YOLO Detection</title>
+    <script>
+        function removeBoundingBox(event) {
+            event.target.remove();
+        }
+    </script>
+</head>
+<body>
+    <h1>YOLO Detection</h1>
+    <div id="image-container">
+        <img id="detected-image" src="data:image/jpeg;base64,{{ image }}" alt="Detected Objects">
+        {% for label, boxes in bounding_boxes.items %}
+            <h2>{{ label }}</h2>
+            {% for box in boxes %}
+                <div class="bounding-box" style="left: {{ box.0 }}px; top: {{ box.1 }}px; width: {{ box.2 }}px; height: {{ box.3 }}px;" onclick="removeBoundingBox(event)">
+                    <p class="label-text">{{ label }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</body>
+</html>
